@@ -23,6 +23,9 @@
             padding: 14px 18px; border-radius: 20px; flex-shrink: 0;
         }
         .header-stats { display: flex; justify-content: space-between; align-items: center; font-size: 22px; font-weight: 800; letter-spacing: -0.5px; }
+        .luck-container { display: flex; justify-content: space-between; align-items: center; margin-top: 6px; }
+        .luck { font-size: 13px; color: #ff9500; font-weight: 700; }
+        .coll-badge { font-size: 11px; background: rgba(255,255,255,0.06); padding: 2px 8px; border-radius: 6px; color: #8e8e93; }
         .main-content { flex: 1; display: flex; flex-direction: column; overflow: hidden; margin: 15px 0; }
         .screen { display: none; width: 100%; height: 100%; }
         .screen.active { display: flex; flex-direction: column; }
@@ -40,11 +43,9 @@
         .item-price { font-size: 34px; font-weight: 900; margin-bottom: 10px; letter-spacing: -1px; background: linear-gradient(to right, #fff, #a2a2a2); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .multipliers { font-size: 13px; color: #8e8e93; line-height: 1.5; background: rgba(0,0,0,0.2); padding: 8px 16px; border-radius: 14px; border: 1px solid rgba(255,255,255,0.03); margin-bottom: 10px; width: 100%; max-width: 320px; }
         .multiplier-val { color: #007aff; font-weight: 700; }
-        .multidrop-list { width: 100%; max-width: 340px; background: rgba(0,0,0,0.2); border-radius: 16px; border: 1px solid rgba(255,255,255,0.04); padding: 10px; margin-top: 5px; max-height: 180px; overflow-y: auto; display: none; }
+        .multidrop-list { width: 100%; max-width: 340px; background: rgba(0,0,0,0.2); border-radius: 16px; border: 1px solid rgba(255,255,255,0.04); padding: 10px; margin-top: 5px; max-height: 140px; overflow-y: auto; display: none; }
         .multidrop-row { display: flex; justify-content: space-between; align-items: center; padding: 6px 4px; border-bottom: 1px solid rgba(255,255,255,0.03); font-size: 12px; font-weight: 600; }
         .multidrop-row:last-child { border-bottom: none; }
-        .locked-feature { width: 100%; display: flex; justify-content: space-between; font-size: 14px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 12px; margin-bottom: 15px; font-weight: 600; flex-shrink: 0; }
-        .locked-note { color: #545456; }
         .controls-panel { display: flex; flex-direction: column; gap: 10px; width: 100%; flex-shrink: 0; }
         .action-buttons { display: flex; gap: 10px; }
         .btn-secondary { flex: 1; background: rgba(255, 255, 255, 0.05); color: white; border: 1px solid rgba(255,255,255,0.05); padding: 14px; border-radius: 16px; font-weight: 700; font-size: 14px; cursor: pointer; }
@@ -52,14 +53,15 @@
         .btn-main { background: #ffffff; color: #000000; border: none; width: 100%; padding: 16px; border-radius: 40px; font-size: 15px; font-weight: 800; display: flex; justify-content: center; align-items: center; gap: 6px; cursor: pointer; box-shadow: 0 6px 20px rgba(255,255,255,0.12); }
         .btn-main:active { transform: scale(0.98); }
         .btn-x10 { background: linear-gradient(135deg, #1c1c1e 0%, #2c2c2e 100%); color: #ffffff; border: 1px solid rgba(255,255,255,0.08); box-shadow: 0 6px 20px rgba(0,0,0,0.3); }
-        .btn-x10:active { transform: scale(0.98); background: #2c2c2e; }
+        .btn-danger { background: rgba(255, 59, 48, 0.15); color: #ff453a; border: 1px solid rgba(255, 59, 48, 0.2); padding: 8px 12px; border-radius: 10px; font-size: 12px; font-weight: 700; cursor: pointer; width: 100%; }
         .energy-cost { font-size: 11px; background: #000000; padding: 2px 6px; border-radius: 6px; color: #fff; font-weight: 700; }
         .energy-cost-x10 { font-size: 11px; background: rgba(255,255,255,0.1); padding: 2px 6px; border-radius: 6px; color: #fff; font-weight: 700; }
-        #wardrobe-screen, #shop-screen { justify-content: flex-start; }
-        .screen-title { font-size: 24px; font-weight: 800; margin-bottom: 18px; text-align: left; letter-spacing: -0.5px; }
-        .wardrobe-grid, .shop-list { flex: 1; display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; overflow-y: auto; padding-bottom: 20px; }
-        .wardrobe-grid::-webkit-scrollbar, .shop-list::-webkit-scrollbar { width: 0px; }
-        .wardrobe-card, .shop-card { background: rgba(255, 255, 255, 0.02); border-radius: 18px; padding: 14px; display: flex; flex-direction: column; align-items: center; justify-content: space-between; text-align: center; border: 1px solid rgba(255,255,255,0.04); backdrop-filter: blur(5px); }
+        #wardrobe-screen, #shop-screen, #collection-screen { justify-content: flex-start; }
+        .screen-title { font-size: 24px; font-weight: 800; margin-bottom: 14px; text-align: left; letter-spacing: -0.5px; }
+        .wardrobe-grid, .shop-list, .coll-list { flex: 1; display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; overflow-y: auto; padding-bottom: 20px; }
+        .wardrobe-grid::-webkit-scrollbar, .shop-list::-webkit-scrollbar, .coll-list::-webkit-scrollbar { width: 0px; }
+        .wardrobe-card, .shop-card, .coll-card { background: rgba(255, 255, 255, 0.02); border-radius: 18px; padding: 14px; display: flex; flex-direction: column; align-items: center; justify-content: space-between; text-align: center; border: 1px solid rgba(255,255,255,0.04); backdrop-filter: blur(5px); }
+        .coll-card.active { border: 1px solid #ff9500; background: rgba(255, 149, 0, 0.03); }
         .card-img-box { width: 70px; height: 70px; display: flex; align-items: center; justify-content: center; margin-bottom: 8px; border-radius: 50%; background: rgba(255,255,255,0.01); border: 1px solid rgba(255,255,255,0.03); font-size: 38px; }
         .card-name { font-size: 13px; font-weight: 700; margin-bottom: 4px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; min-height: 34px; line-height: 1.3; }
         .card-price { font-size: 15px; font-weight: 800; color: #007aff; margin-bottom: 8px; }
@@ -69,15 +71,13 @@
         .modal-icon { font-size: 50px; margin-bottom: 12px; }
         .modal-title { font-size: 20px; font-weight: 800; margin-bottom: 8px; }
         .modal-text { font-size: 14px; color: #8e8e93; margin-bottom: 20px; line-height: 1.4; }
-        .nav-tabs { width: 100%; display: flex; background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.04); backdrop-filter: blur(20px); border-radius: 24px; padding: 6px; gap: 6px; flex-shrink: 0; margin-top: 15px; }
-        .tab-btn { flex: 1; background: transparent; border: none; color: #8e8e93; padding: 14px; font-size: 14px; font-weight: 700; border-radius: 18px; cursor: pointer; }
+        .nav-tabs { width: 100%; display: flex; background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.04); backdrop-filter: blur(20px); border-radius: 24px; padding: 4px; gap: 4px; flex-shrink: 0; margin-top: 10px; }
+        .tab-btn { flex: 1; background: transparent; border: none; color: #8e8e93; padding: 10px; font-size: 12px; font-weight: 700; border-radius: 14px; cursor: pointer; }
         .tab-btn.active { background: rgba(255, 255, 255, 0.06); color: #ffffff; box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
-        .btn-danger { background: rgba(255, 59, 48, 0.15); color: #ff453a; border: 1px solid rgba(255, 59, 48, 0.2); padding: 8px 12px; border-radius: 10px; font-size: 12px; font-weight: 700; cursor: pointer; width: 100%; }
         @keyframes popScale { 0% { transform: scale(1); } 50% { transform: scale(0.88); } 100% { transform: scale(1); } }
     </style>
 </head>
 <body>
-    <!-- ИСПРАВЛЕНА ЦЕНА В МОДАЛКЕ: 100 000 ₽ -->
     <div class="modal-overlay" id="energy-modal">
         <div class="modal-card">
             <div class="modal-icon">🔋</div>
@@ -93,6 +93,10 @@
     <div class="app-wrapper">
         <div class="header-section">
             <div class="header-stats"><div id="display-cash">50 000 ₽</div><div id="display-energy">⚡ 30</div></div>
+            <div class="luck-container">
+                <div class="luck" id="display-luck">Удача +0%</div>
+                <div class="coll-badge" id="display-coll-count">Коллекция: 0/4</div>
+            </div>
         </div>
         <div class="main-content">
             <div id="game-screen" class="screen active">
@@ -106,7 +110,6 @@
                     <div class="multidrop-list" id="multidrop-box"></div>
                 </div>
                 <div class="bottom-section">
-                    <div class="locked-feature"><div>Брендовые боксы</div><div class="locked-note">Доступно скоро &gt;</div></div>
                     <div class="controls-panel">
                         <div class="action-buttons" id="normal-actions">
                             <button class="btn-secondary" onclick="saveToWardrobe()">В гардероб</button>
@@ -120,8 +123,7 @@
                 </div>
             </div>
             <div id="wardrobe-screen" class="screen"><div class="screen-title">Мой Гардероб</div><div class="wardrobe-grid" id="wardrobe-grid"></div></div>
-            
-            <!-- ИСПРАВЛЕНА ЦЕНА В МАГАЗИНЕ: 100 000 ₽ -->
+            <div id="collection-screen" class="screen"><div class="screen-title">Коллекция «Хайпбист 2026»</div><div class="coll-list" id="coll-grid"></div></div>
             <div id="shop-screen" class="screen">
                 <div class="screen-title">Магазин улучшений</div>
                 <div class="shop-list">
@@ -137,6 +139,7 @@
         <div class="nav-tabs">
             <button class="tab-btn active" id="tab-game" onclick="switchScreen('game')">Игра</button>
             <button class="tab-btn" id="tab-wardrobe" onclick="switchScreen('wardrobe')">Гардероб</button>
+            <button class="tab-btn" id="tab-collection" onclick="switchScreen('collection')">Коллекция</button>
             <button class="tab-btn" id="tab-shop" onclick="switchScreen('shop')">Магазин</button>
         </div>
     </div>
@@ -146,57 +149,44 @@
 
         let cash = 50000; let energy = 30; const maxEnergy = 30;
         let currentDroppedItem = null; let totalSpins = 0; let wardrobe = [];
+        let luckBonus = 0; let collectedItems = { rare: false, epic: false, legendary: false, mythic: false };
 
         const lootPool = {
             common: [
-                { name: "Носки Nike Everyday Pack", emoji: "🧦", basePrice: 900, rarityText: "Обычное", color: "#ffffff", glow: "rgba(255,255,255,0.12)" },
-                { name: "Базовая футболка Uniqlo AIRism", emoji: "👕", basePrice: 2400, rarityText: "Обычное", color: "#ffffff", glow: "rgba(255,255,255,0.12)" },
-                { name: "Кепка Carhartt WIP Madison", emoji: "🧢", basePrice: 4500, rarityText: "Обычное", color: "#ffffff", glow: "rgba(255,255,255,0.12)" },
-                { name: "Тканевый ремень Carhartt WIP", emoji: "🎗️", basePrice: 3100, rarityText: "Обычное", color: "#ffffff", glow: "rgba(255,255,255,0.12)" }
+                { name: "Носки Nike Everyday Pack", emoji: "🧦", basePrice: 900, rarityText: "Обычное", color: "#ffffff", glow: "rgba(255,255,255,0.12)", rarityKey: "common" },
+                { name: "Базовая футболка Uniqlo AIRism", emoji: "👕", basePrice: 2400, rarityText: "Обычное", color: "#ffffff", glow: "rgba(255,255,255,0.12)", rarityKey: "common" },
+                { name: "Кепка Carhartt WIP Madison", emoji: "🧢", basePrice: 4500, rarityText: "Обычное", color: "#ffffff", glow: "rgba(255,255,255,0.12)", rarityKey: "common" }
             ],
             rare: [
-                { name: "Лонгслив Stone Island Patch", emoji: "👕", basePrice: 16000, rarityText: "Редкое", color: "#58a6ff", glow: "rgba(0,122,255,0.25)" },
-                { name: "Худи Stussy Stock Logo", emoji: "🧥", basePrice: 18000, rarityText: "Редкое", color: "#58a6ff", glow: "rgba(0,122,255,0.25)" },
-                { name: "Футболка Corteiz Alcatraz", emoji: "👕", basePrice: 9500, rarityText: "Редкое", color: "#58a6ff", glow: "rgba(0,122,255,0.25)" },
-                { name: "Кроссовки Adidas Campus 00s", emoji: "👟", basePrice: 14000, rarityText: "Редкое", color: "#58a6ff", glow: "rgba(0,122,255,0.25)" },
-                { name: "Шорты сетчатые Corteiz Rules", emoji: "🩳", basePrice: 11000, rarityText: "Редкое", color: "#58a6ff", glow: "rgba(0,122,255,0.25)" }
+                { name: "Лонгслив Stone Island Patch", emoji: "👕", basePrice: 16000, rarityText: "Редкое", color: "#58a6ff", glow: "rgba(0,122,255,0.25)", rarityKey: "rare" },
+                { name: "Худи Stussy Stock Logo", emoji: "🧥", basePrice: 18000, rarityText: "Редкое", color: "#58a6ff", glow: "rgba(0,122,255,0.25)", rarityKey: "rare" },
+                { name: "Футболка Corteiz Alcatraz", emoji: "👕", basePrice: 10500, rarityText: "Редкое", color: "#58a6ff", glow: "rgba(0,122,255,0.25)", rarityKey: "rare" }
             ],
             epic: [
-                { name: "Очки Oakley Radar EV Black", emoji: "🕶️", basePrice: 24000, rarityText: "Эпическое", color: "#a371f7", glow: "rgba(175,82,222,0.35)" },
-                { name: "Кроссовки Nike Jordan 1 Retro", emoji: "👟", basePrice: 32000, rarityText: "Эпическое", color: "#a371f7", glow: "rgba(175,82,222,0.35)" },
-                { name: "Серебряное кольцо Chrome Hearts F*", emoji: "💍", basePrice: 55000, rarityText: "Эпическое", color: "#a371f7", glow: "rgba(175,82,222,0.35)" },
-                { name: "Куртка Arc'teryx Beta Lightweight", emoji: "🧥", basePrice: 48000, rarityText: "Эпическое", color: "#a371f7", glow: "rgba(175,82,222,0.35)" },
-                { name: "Джоггеры Corteiz Cargo Pants", emoji: "👖", basePrice: 28000, rarityText: "Эпическое", color: "#a371f7", glow: "rgba(175,82,222,0.35)" }
+                { name: "Куртка Arc'teryx Beta Lightweight", emoji: "🧥", basePrice: 48000, rarityText: "Эпическое", color: "#a371f7", glow: "rgba(175,82,222,0.35)", rarityKey: "epic" },
+                { name: "Очки Oakley Radar EV Black", emoji: "🕶️", basePrice: 24000, rarityText: "Эпическое", color: "#a371f7", glow: "rgba(175,82,222,0.35)", rarityKey: "epic" },
+                { name: "Джоггеры Corteiz Cargo", emoji: "👖", basePrice: 29000, rarityText: "Эпическое", color: "#a371f7", glow: "rgba(175,82,222,0.35)", rarityKey: "epic" }
             ],
             legendary: [
-                { name: "Пуховик Supreme x The North Face", emoji: "🧥", basePrice: 85000, rarityText: "🔥 ЛЕГЕНДАРНОЕ", color: "#ff5555", glow: "rgba(255,59,48,0.5)" },
-                { name: "Кроссовки Travis Scott x AJ1 Low", emoji: "👟", basePrice: 95000, rarityText: "🔥 ЛЕГЕНДАРНОЕ", color: "#ff5555", glow: "rgba(255,59,48,0.5)" },
-                { name: "Кроссовки Corteiz x Nike Air Max 95", emoji: "👟", basePrice: 78000, rarityText: "🔥 ЛЕГЕНДАРНОЕ", color: "#ff5555", glow: "rgba(255,59,48,0.5)" },
-                { name: "Худи Chrome Hearts Cross Patch", emoji: "🧥", basePrice: 145000, rarityText: "🔥 ЛЕГЕНДАРНОЕ", color: "#ff5555", glow: "rgba(255,59,48,0.5)" }
+                { name: "Кроссовки Travis Scott x AJ1 Low", emoji: "👟", basePrice: 95000, rarityText: "🔥 ЛЕГЕНДАРНОЕ", color: "#ff9500", glow: "rgba(255,149,0,0.4)", rarityKey: "legendary" },
+                { name: "Пуховик Supreme x The North Face", emoji: "🧥", basePrice: 89000, rarityText: "🔥 ЛЕГЕНДАРНОЕ", color: "#ff9500", glow: "rgba(255,149,0,0.4)", rarityKey: "legendary" }
+            ],
+            mythic: [
+                { name: "Золотая цепь Chrome Hearts 22k", emoji: "👑", basePrice: 280000, rarityText: "✨ МИФИЧЕСКОЕ", color: "#ff3b30", glow: "rgba(255,59,48,0.6)", rarityKey: "mythic" },
+                { name: "Кожаный жилет Chrome Hearts Cross", emoji: "🦺", basePrice: 350000, rarityText: "✨ МИФИЧЕСКОЕ", color: "#ff3b30", glow: "rgba(255,59,48,0.6)", rarityKey: "mythic" }
             ]
         };
         function switchScreen(screenName) {
-            document.getElementById('game-screen').classList.remove('active');
-            document.getElementById('wardrobe-screen').classList.remove('active');
-            document.getElementById('shop-screen').classList.remove('active');
-            document.getElementById('tab-game').classList.remove('active');
-            document.getElementById('tab-wardrobe').classList.remove('active');
-            document.getElementById('tab-shop').classList.remove('active');
-            if (screenName === 'game') {
-                document.getElementById('game-screen').classList.add('active');
-                document.getElementById('tab-game').classList.add('active');
-            } else if (screenName === 'wardrobe') {
-                document.getElementById('wardrobe-screen').classList.add('active');
-                document.getElementById('tab-wardrobe').classList.add('active');
-                renderWardrobe();
-            } else if (screenName === 'shop') {
-                document.getElementById('shop-screen').classList.add('active');
-                document.getElementById('tab-shop').classList.add('active');
-            }
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(t => t.classList.remove('active'));
+            document.getElementById(screenName + '-screen').classList.add('active');
+            document.getElementById('tab-' + screenName).classList.add('active');
+            if (screenName === 'wardrobe') renderWardrobe();
+            if (screenName === 'collection') renderCollection();
         }
 
         function saveProgress() {
-            const gameData = { cash, energy, totalSpins, wardrobe };
+            const gameData = { cash, energy, totalSpins, wardrobe, luckBonus, collectedItems };
             localStorage.setItem('hustleDropSave', JSON.stringify(gameData));
         }
 
@@ -207,34 +197,36 @@
                     const data = JSON.parse(savedData);
                     cash = data.cash ?? 50000; energy = data.energy ?? 30;
                     totalSpins = data.totalSpins ?? 0; wardrobe = data.wardrobe ?? [];
+                    luckBonus = data.luckBonus ?? 0; collectedItems = data.collectedItems ?? { rare:false, epic:false, legendary:false, mythic:false };
                 } catch (e) { console.error(e); }
             }
-        }
-
-        // ИСПРАВЛЕНО: Списание ровно 100 000 ₽ за пак
-        function buyEnergyPack() {
-            if (cash < 100000) { alert("Недостаточно рублей на балансе!"); return; }
-            cash -= 100000; energy = Math.min(maxEnergy, energy + 10);
-            closeEnergyModal(); saveProgress(); updateUI();
         }
 
         function updateUI() {
             document.getElementById('display-cash').innerText = cash.toLocaleString() + " ₽";
             document.getElementById('display-energy').innerText = "⚡ " + energy;
+            document.getElementById('display-luck').innerText = "Удача +" + luckBonus + "%";
+            let cCount = Object.values(collectedItems).filter(Boolean).length;
+            document.getElementById('display-coll-count').innerText = "Коллекция: " + cCount + "/4";
             document.getElementById('btn-sell').innerText = currentDroppedItem ? "Продать за " + currentDroppedItem.finalPrice.toLocaleString() + " ₽" : "Продать за 0 ₽";
         }
 
         function openEnergyModal() { document.getElementById('energy-modal').style.display = "flex"; }
         function closeEnergyModal() { document.getElementById('energy-modal').style.display = "none"; }
+        function buyEnergyPack() { if (cash < 100000) { alert("Недостаточно рублей!"); return; } cash -= 100000; energy = Math.min(maxEnergy, energy + 10); closeEnergyModal(); saveProgress(); updateUI(); }
 
         function generateRandomItem() {
             totalSpins += 1; let rand = Math.random() * 100; let rarity = "common";
-            if (rand < 78) rarity = "common"; else if (rand < 96) rarity = "rare";
-            else if (rand < 99.6) rarity = "epic"; else rarity = "legendary";
+            if (rand < 0.05) rarity = "mythic";
+            else if (rand < 0.45) rarity = "legendary";
+            else if (rand < 4.95) rarity = "epic";
+            else if (rand < 22.95) rarity = "rare";
+            else rarity = "common";
             const pool = lootPool[rarity]; const baseItem = pool[Math.floor(Math.random() * pool.length)];
-            const brandMult = (1 + Math.random() * 0.4).toFixed(1);
-            const collabrMult = (1 + Math.random() * 0.3).toFixed(1);
-            const conditionMult = (1 + Math.random() * 0.3).toFixed(1);
+            const luckFactor = 1 + (luckBonus / 100);
+            const brandMult = (1 + Math.random() * 0.4 * luckFactor).toFixed(1);
+            const collabrMult = (1 + Math.random() * 0.3 * luckFactor).toFixed(1);
+            const conditionMult = (1 + Math.random() * 0.3 * luckFactor).toFixed(1);
             let finalPrice = Math.floor(baseItem.basePrice * brandMult * collabrMult * conditionMult);
             return { id: Date.now() + Math.random(), ...baseItem, finalPrice, serialNum: totalSpins, brandMult, collabrMult, conditionMult };
         }
@@ -247,6 +239,18 @@
             document.getElementById('item-rarity').style.color = item.color; document.getElementById('item-serial').innerText = "№ " + item.serialNum;
             document.getElementById('item-price').innerText = item.finalPrice.toLocaleString() + " ₽";
             document.getElementById('item-mults').innerHTML = "Бренд <span class=\"multiplier-val\">×" + item.brandMult + "</span> · Коллаб <span class=\"multiplier-val\">×" + item.collabrMult + "</span><br>Состояние <span class=\"multiplier-val\">×" + item.conditionMult + "</span>";
+        }
+        function checkCollectionTrigger(item) {
+            const targets = {
+                "Лонгслив Stone Island Patch": { key: "rare", boost: 15 },
+                "Куртка Arc'teryx Beta Lightweight": { key: "epic", boost: 35 },
+                "Кроссовки Travis Scott x AJ1 Low": { key: "legendary", boost: 100 },
+                "Золотая цепь Chrome Hearts 22k": { key: "mythic", boost: 200 }
+            };
+            if (targets[item.name] && !collectedItems[targets[item.name].key]) {
+                collectedItems[targets[item.name].key] = true; luckBonus += targets[item.name].boost;
+                tg && tg.HapticFeedback && tg.HapticFeedback.notificationOccurred("success");
+            }
         }
 
         function dropItem() {
@@ -263,24 +267,39 @@
             if (useEnergy) { energy -= 10; } else { cash -= 100000; }
             let localDropped = []; let totalPackPrice = 0;
             const listBox = document.getElementById('multidrop-box'); listBox.innerHTML = ""; 
-            for (let i = 0; i < 10; i++) { let item = generateRandomItem(); wardrobe.push(item); localDropped.push(item); totalPackPrice += item.finalPrice; }
+            for (let i = 0; i < 10; i++) { let item = generateRandomItem(); wardrobe.push(item); checkCollectionTrigger(item); localDropped.push(item); totalPackPrice += item.finalPrice; }
             const previewBox = document.getElementById('item-img-div'); previewBox.innerText = "📦"; previewBox.style.boxShadow = "0 10px 40px rgba(52,199,89,0.3)"; previewBox.style.border = "1px solid #34c759";
             document.getElementById('item-name').innerText = "ПАК ИЗ 10 КОРОБОК"; document.getElementById('item-rarity').innerText = "МАССОВЫЙ ДРОП"; document.getElementById('item-rarity').style.color = "#34c759";
             document.getElementById('item-serial').innerText = "Все вещи сохранены в гардероб"; document.getElementById('item-price').innerText = totalPackPrice.toLocaleString() + " ₽";
-            document.getElementById('item-mults').innerText = "Ниже представлен полный отчет по выбитому шмоту:";
-            localDropped.forEach(item => { const row = document.createElement('div'); row.className = "multidrop-row"; row.innerHTML = `<span>${item.emoji} ${item.name} (№${item.serialNum})</span><span style="color:${item.color}">${item.finalPrice.toLocaleString()} ₽</span>`; listBox.appendChild(row); });
+            document.getElementById('item-mults').innerText = "Ниже представлен полный отчет:";
+            localDropped.forEach(item => { const row = document.createElement('div'); row.className = "multidrop-row"; row.innerHTML = `<span>${item.emoji} ${item.name}</span><span style="color:${item.color}">${item.finalPrice.toLocaleString()} ₽</span>`; listBox.appendChild(row); });
             listBox.style.display = "block"; document.getElementById('normal-actions').style.display = "none"; saveProgress(); updateUI();
         }
 
         function sellItem() { if (!currentDroppedItem) return; cash += currentDroppedItem.finalPrice; resetDropArea(); saveProgress(); updateUI(); }
-        function saveToWardrobe() { if (!currentDroppedItem) return; wardrobe.push(currentDroppedItem); resetDropArea(); saveProgress(); updateUI(); }
+        function saveToWardrobe() { if (!currentDroppedItem) return; checkCollectionTrigger(currentDroppedItem); wardrobe.push(currentDroppedItem); resetDropArea(); saveProgress(); updateUI(); }
 
         function renderWardrobe() {
             const grid = document.getElementById('wardrobe-grid'); grid.innerHTML = "";
-            if (wardrobe.length === 0) { grid.innerHTML = "<div style='grid-column: span 2; color: #8e8e93; margin-top: 40px; font-weight:600;'>Гардероб пуст. Дропни что-нибудь!</div>"; return; }
+            if (wardrobe.length === 0) { grid.innerHTML = "<div style='grid-column: span 2; color: #8e8e93; margin-top: 40px; font-weight:600;'>Гардероб пуст.</div>"; return; }
             wardrobe.forEach(item => {
                 const card = document.createElement('div'); card.className = "wardrobe-card"; card.style.border = `1px solid ${item.color}22`;
-                card.innerHTML = `<div class="card-img-box" style="box-shadow: 0 4px 15px ${item.glow}">${item.emoji}</div><div class="card-name" style="color: ${item.color}">${item.name}</div><div class="card-price">${item.finalPrice.toLocaleString()} ₽</div><div class="item-serial" style="margin-bottom:8px;">№ ${item.serialNum}</div><button class="btn-danger" onclick="sellFromWardrobe(${item.id})">Слить</button>`;
+                card.innerHTML = `<div class="card-img-box" style="box-shadow: 0 4px 15px ${item.glow}">${item.emoji}</div><div class="card-name" style="color: ${item.color}">${item.name}</div><div class="card-price">${item.finalPrice.toLocaleString()} ₽</div><button class="btn-danger" onclick="sellFromWardrobe(${item.id})">Слить</button>`;
+                grid.appendChild(card);
+            });
+        }
+
+        function renderCollection() {
+            const grid = document.getElementById('coll-grid'); grid.innerHTML = "";
+            const items = [
+                { name: "Лонгслив Stone Island Patch", emoji: "👕", r: "Редкое", c: "#58a6ff", b: "+15% Удачи", status: collectedItems.rare },
+                { name: "Куртка Arc'teryx Beta Lightweight", emoji: "🧥", r: "Эпическое", c: "#a371f7", b: "+35% Удачи", status: collectedItems.epic },
+                { name: "Кроссовки Travis Scott x AJ1 Low", emoji: "👟", r: "Легендарное", c: "#ff9500", b: "+100% Удачи", status: collectedItems.legendary },
+                { name: "Золотая цепь Chrome Hearts 22k", emoji: "👑", r: "Мифическое", c: "#ff3b30", b: "+200% Удачи", status: collectedItems.mythic }
+            ];
+            items.forEach(i => {
+                const card = document.createElement('div'); card.className = "coll-card" + (i.status ? " active" : "");
+                card.innerHTML = `<div class="card-img-box" style="filter: grayscale(${i.status ? 0 : 1}); opacity: ${i.status ? 1 : 0.4}">${i.emoji}</div><div class="card-name" style="color:${i.status ? i.c : '#8e8e93'}">${i.name}</div><div style="font-size:11px; color:#ff9500; font-weight:700;">${i.b}</div><div style="font-size:10px; color:${i.status ? '#34c759':'#8e8e93'}">${i.status ? '✨ Собрано' : '🔒 Не найдено'}</div>`;
                 grid.appendChild(card);
             });
         }
