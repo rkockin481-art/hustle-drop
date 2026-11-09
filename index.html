@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Hustle & Drop Premium</title>
+    <script src="https://telegram.org"></script>
+    <style>
+        * { box-sizing: border-box; }
+        html, body {
+            height: 100%; margin: 0; padding: 0;
+            background: radial-gradient(circle at center, #141517 0%, #070809 100%);
+            color: #ffffff; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            overflow: hidden;
+        }
+        .app-wrapper {
+            display: flex; flex-direction: column; justify-content: space-between;
+            height: 100vh; max-width: 480px; margin: 0 auto; padding: 20px;
+        }
+        .header-section {
+            width: 100%; background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(12px); 
+            -webkit-backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.05); 
+            padding: 14px 18px; border-radius: 20px; flex-shrink: 0;
+        }
+        .header-stats { display: flex; justify-content: space-between; align-items: center; font-size: 22px; font-weight: 800; letter-spacing: -0.5px; }
+        .main-content { flex: 1; display: flex; flex-direction: column; overflow: hidden; margin: 15px 0; }
+        .screen { display: none; width: 100%; height: 100%; }
+        .screen.active { display: flex; flex-direction: column; }
+        .drop-container { flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; overflow-y: auto; }
+        .item-img-box { 
+            width: 150px; height: 150px; display: flex; align-items: center; justify-content: center; 
+            margin-bottom: 15px; border-radius: 50%; background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255,255,255,0.05);
+            box-shadow: 0 10px 40px rgba(255, 255, 255, 0.05); transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            font-size: 80px; line-height: 1; flex-shrink: 0;
+        }
+        .item-img-box.shake { animation: popScale 0.4s ease-in-out; }
+        .rarity-tag { font-size: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; }
+        .item-title { font-size: 24px; font-weight: 800; margin-bottom: 6px; color: #ffffff; min-height: 28px; letter-spacing: -0.5px; }
+        .item-serial { font-size: 12px; color: #8e8e93; margin-bottom: 10px; background: rgba(255,255,255,0.06); padding: 4px 10px; border-radius: 8px; font-weight: 600; }
+        .item-price { font-size: 34px; font-weight: 900; margin-bottom: 10px; letter-spacing: -1px; background: linear-gradient(to right, #fff, #a2a2a2); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .multipliers { font-size: 13px; color: #8e8e93; line-height: 1.5; background: rgba(0,0,0,0.2); padding: 8px 16px; border-radius: 14px; border: 1px solid rgba(255,255,255,0.03); margin-bottom: 10px; width: 100%; max-width: 320px; }
+        .multiplier-val { color: #007aff; font-weight: 700; }
+        .multidrop-list { width: 100%; max-width: 340px; background: rgba(0,0,0,0.2); border-radius: 16px; border: 1px solid rgba(255,255,255,0.04); padding: 10px; margin-top: 5px; max-height: 180px; overflow-y: auto; display: none; }
+        .multidrop-row { display: flex; justify-content: space-between; align-items: center; padding: 6px 4px; border-bottom: 1px solid rgba(255,255,255,0.03); font-size: 12px; font-weight: 600; }
+        .multidrop-row:last-child { border-bottom: none; }
+        .locked-feature { width: 100%; display: flex; justify-content: space-between; font-size: 14px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 12px; margin-bottom: 15px; font-weight: 600; flex-shrink: 0; }
+        .locked-note { color: #545456; }
+        .controls-panel { display: flex; flex-direction: column; gap: 10px; width: 100%; flex-shrink: 0; }
+        .action-buttons { display: flex; gap: 10px; }
+        .btn-secondary { flex: 1; background: rgba(255, 255, 255, 0.05); color: white; border: 1px solid rgba(255,255,255,0.05); padding: 14px; border-radius: 16px; font-weight: 700; font-size: 14px; cursor: pointer; }
+        .btn-secondary:active { background: rgba(255, 255, 255, 0.1); transform: scale(0.98); }
+        .btn-main { background: #ffffff; color: #000000; border: none; width: 100%; padding: 16px; border-radius: 40px; font-size: 15px; font-weight: 800; display: flex; justify-content: center; align-items: center; gap: 6px; cursor: pointer; box-shadow: 0 6px 20px rgba(255,255,255,0.12); }
+        .btn-x10 { background: linear-gradient(135deg, #1c1c1e 0%, #2c2c2e 100%); color: #ffffff; border: 1px solid rgba(255,255,255,0.08); box-shadow: 0 6px 20px rgba(0,0,0,0.3); }
+        .energy-cost { font-size: 11px; background: #000000; padding: 2px 6px; border-radius: 6px; color: #fff; font-weight: 700; }
+        .energy-cost-x10 { font-size: 11px; background: rgba(255,255,255,0.1); padding: 2px 6px; border-radius: 6px; color: #fff; font-weight: 700; }
+        #wardrobe-screen, #shop-screen { justify-content: flex-start; }
+        .screen-title { font-size: 24px; font-weight: 800; margin-bottom: 18px; text-align: left; letter-spacing: -0.5px; }
+        .wardrobe-grid, .shop-list { flex: 1; display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; overflow-y: auto; padding-bottom: 20px; }
+        .wardrobe-card, .shop-card { background: rgba(255, 255, 255, 0.02); border-radius: 18px; padding: 14px; display: flex; flex-direction: column; align-items: center; justify-content: space-between; text-align: center; border: 1px solid rgba(255,255,255,0.04); backdrop-filter: blur(5px); }
+        .card-img-box { width: 70px; height: 70px; display: flex; align-items: center; justify-content: center; margin-bottom: 8px; border-radius: 50%; background: rgba(255,255,255,0.01); border: 1px solid rgba(255,255,255,0.03); font-size: 38px; }
+        .card-name { font-size: 13px; font-weight: 700; margin-bottom: 4px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; min-height: 34px; line-height: 1.3; }
+        .card-price { font-size: 15px; font-weight: 800; color: #007aff; margin-bottom: 8px; }
+        .btn-buy { background: #34c759; color: #fff; border: none; padding: 10px; border-radius: 12px; font-size: 13px; font-weight: 700; cursor: pointer; width: 100%; }
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); backdrop-filter: blur(8px); justify-content: center; align-items: center; z-index: 1000; padding: 20px; }
+        .modal-card { background: #1c1d1f; border: 1px solid rgba(255,255,255,0.08); border-radius: 24px; padding: 24px; width: 100%; max-width: 340px; text-align: center; box-shadow: 0 20px 40px rgba(0,0,0,0.5); }
+        .modal-icon { font-size: 50px; margin-bottom: 12px; }
+        .modal-title { font-size: 20px; font-weight: 800; margin-bottom: 8px; }
+        .modal-text { font-size: 14px; color: #8e8e93; margin-bottom: 20px; line-height: 1.4; }
+        .nav-tabs { width: 100%; display: flex; background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.04); backdrop-filter: blur(20px); border-radius: 24px; padding: 6px; gap: 6px; flex-shrink: 0; margin-top: 15px; }
+        .tab-btn { flex: 1; background: transparent; border: none; color: #8e8e93; padding: 14px; font-size: 14px; font-weight: 700; border-radius: 18px; cursor: pointer; }
+        .tab-btn.active { background: rgba(255, 255, 255, 0.06); color: #ffffff; box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
+        .btn-danger { background: rgba(255, 59, 48, 0.15); color: #ff453a; border: 1px solid rgba(255, 59, 48, 0.2); padding: 8px 12px; border-radius: 10px; font-size: 12px; font-weight: 700; cursor: pointer; width: 100%; }
+        @keyframes popScale { 0% { transform: scale(1); } 50% { transform: scale(0.88); } 100% { transform: scale(1); } }
+    </style>
+</head>
+<body>
+    <div class="modal-overlay" id="energy-modal">
+        <div class="modal-card">
+            <div class="modal-icon">🔋</div>
+            <div class="modal-title">Закончилась энергия</div>
+            <div class="modal-text">Хотите мгновенно восстановить силу и продолжить хасл?<br><b style="color:#fff">Пополнение: +10 ⚡ за 30 000 ₽</b></div>
+            <div style="display:flex; gap:10px;">
+                <button class="btn-secondary" style="padding:12px;" onclick="closeEnergyModal()">Отмена</button>
+                <button class="btn-buy" style="padding:12px; border-radius:16px;" onclick="buyEnergyPack()">Купить</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="app-wrapper">
+        <div class="header-section">
+            <div class="header-stats"><div id="display-cash">50 000 ₽</div><div id="display-energy">⚡ 30</div></div>
+        </div>
+        <div class="main-content">
+            <div id="game-screen" class="screen active">
+                <div class="drop-container">
+                    <div class="item-img-box" id="item-img-div">📦</div>
+                    <div class="rarity-tag" id="item-rarity">Нажми Дроп</div>
+                    <div class="item-title" id="item-name">Открой коробку</div>
+                    <div class="item-serial" id="item-serial">№ 0</div>
+                    <div class="item-price" id="item-price">0 ₽</div>
+                    <div class="multipliers" id="item-mults">Ожидание открытия...</div>
+                    <div class="multidrop-list" id="multidrop-box"></div>
+                </div>
+                <div class="bottom-section">
+                    <div class="locked-feature"><div>Брендовые боксы</div><div class="locked-note">Доступно скоро &gt;</div></div>
+                    <div class="controls-panel">
+                        <div class="action-buttons" id="normal-actions">
+                            <button class="btn-secondary" onclick="saveToWardrobe()">В гардероб</button>
+                            <button class="btn-secondary" id="btn-sell" onclick="sellItem()">Продать за 0 ₽</button>
+                        </div>
+                        <div style="display:flex; gap:10px; width:100%;">
+                            <button class="btn-main" onclick="dropItem()">Дроп <span class="energy-cost">⚡ 1</span></button>
+                            <button class="btn-main btn-x10" onclick="dropX10Items()">Дроп ×10 <span class="energy-cost-x10">100к / ⚡10</span></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="wardrobe-screen" class="screen"><div class="screen-title">Мой Гардероб</div><div class="wardrobe-grid" id="wardrobe-grid"></div></div>
+            <div id="shop-screen" class="screen">
+                <div class="screen-title">Магазин улучшений</div>
+                <div class="shop-list">
+                    <div class="shop-card" style="grid-column: span 2; max-width: 240px; margin: 0 auto;">
+                        <div class="card-img-box">🔋</div>
+                        <div class="card-name">Быстрый пак энергии<br><span style="font-size:11px;color:#8e8e93">+10 единиц ⚡</span></div>
+                        <div class="card-price">30 000 ₽</div>
+                        <button class="btn-buy" onclick="openEnergyModal()">Купить</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="nav-tabs">
+            <button class="tab-btn active" id="tab-game" onclick="switchScreen('game')">Игра</button>
+            <button class="tab-btn" id="tab-wardrobe" onclick="switchScreen('wardrobe')">Гардероб</button>
+            <button class="tab-btn" id="tab-shop" onclick="switchScreen('shop')">Магазин</button>
+        </div>
+    </div>
+    <script>
+        const tg = window.Telegram ? window.Telegram.WebApp : null;
+        if (tg) { tg.ready(); tg.expand(); }
+
+        let cash = 50000; let energy = 30; const maxEnergy = 30;
+        let currentDroppedItem = null; let totalSpins = 0; let wardrobe = [];
+
+        const lootPool = {
+            common: [
+                { name: "Носки Nike Everyday", emoji: "🧦", basePrice: 900, rarityText: "Обычное", color: "#ffffff", glow: "rgba(255,255,255,0.12)" },
+                { name: "Футболка Uniqlo AIRism", emoji: "👕", basePrice: 2400, rarityText: "Обычное", color: "#ffffff", glow: "rgba(255,255,255,0.12)" },
+                { name: "Кепка Carhartt WIP", emoji: "🧢", basePrice: 4500, rarityText: "Обычное", color: "#ffffff", glow: "rgba(255,255,255,0.12)" }
+            ],
+            rare: [
+                { name: "Лонгслив Stone Island", emoji: "👕", basePrice: 16000, rarityText: "Редкое", color: "#58a6ff", glow: "rgba(0,122,255,0.25)" },
+                { name: "Худи Stussy Stock Logo", emoji: "🧥", basePrice: 18000, rarityText: "Редкое", color: "#58a6ff", glow: "rgba(0,122,255,0.25)" },
+                { name: "Кроссовки Adidas Campus", emoji: "👟", basePrice: 14000, rarityText: "Редкое", color: "#58a6ff", glow: "rgba(0,122,255,0.25)" }
+            ],
+            epic: [
+                { name: "Очки Oakley Radar EV", emoji: "🕶️", basePrice: 24000, rarityText: "Эпическое", color: "#a371f7", glow: "rgba(175,82,222,0.35)" },
+                { name: "Кроссовки Nike Jordan 1", emoji: "👟", basePrice: 32000, rarityText: "Эпическое", color: "#a371f7", glow: "rgba(175,82,222,0.35)" },
+                { name: "Куртка Arc'teryx Beta M", emoji: "🧥", basePrice: 48000, rarityText: "Эпическое", color: "#a371f7", glow: "rgba(175,82,222,0.35)" }
+            ],
+            legendary: [
+                { name: "Пуховик Supreme x TNF", emoji: "🧥", basePrice: 85000, rarityText: "🔥 ЛЕГЕНДАРНОЕ", color: "#ff5555", glow: "rgba(255,59,48,0.5)" },
+                { name: "Travis Scott x AJ1 Low", emoji: "👟", basePrice: 95000, rarityText: "🔥 ЛЕГЕНДАРНОЕ", color: "#ff5555", glow: "rgba(255,59,48,0.5)" }
+            ]
+        };
+        function switchScreen(screenName) {
+            document.getElementById('game-screen').classList.remove('active');
+            document.getElementById('wardrobe-screen').classList.remove('active');
+            document.getElementById('shop-screen').classList.remove('active');
+            document.getElementById('tab-game').classList.remove('active');
+            document.getElementById('tab-wardrobe').classList.remove('active');
+            document.getElementById('tab-shop').classList.remove('active');
+            if (screenName === 'game') {
+                document.getElementById('game-screen').classList.add('active');
+                document.getElementById('tab-game').classList.add('active');
+            } else if (screenName === 'wardrobe') {
+                document.getElementById('wardrobe-screen').classList.add('active');
+                document.getElementById('tab-wardrobe').classList.add('active');
+                renderWardrobe();
+            } else if (screenName === 'shop') {
+                document.getElementById('shop-screen').classList.add('active');
+                document.getElementById('tab-shop').classList.add('active');
+            }
+        }
+
+        function saveProgress() {
+            const gameData = { cash, energy, totalSpins, wardrobe };
+            localStorage.setItem('hustleDropSave', JSON.stringify(gameData));
+        }
+
+        function loadProgress() {
+            const savedData = localStorage.getItem('hustleDropSave');
+            if (savedData) {
+                try {
+                    const data = JSON.parse(savedData);
+                    cash = data.cash ?? 50000; energy = data.energy ?? 30;
+                    totalSpins = data.totalSpins ?? 0; wardrobe = data.wardrobe ?? [];
+                } catch (e) { console.error(e); }
+            }
+        }
+
+        function updateUI() {
+            document.getElementById('display-cash').innerText = cash.toLocaleString() + " ₽";
+            document.getElementById('display-energy').innerText = "⚡ " + energy;
+            document.getElementById('btn-sell').innerText = currentDroppedItem ? "Продать за " + currentDroppedItem.finalPrice.toLocaleString() + " ₽" : "Продать за 0 ₽";
+        }
+
+        function openEnergyModal() { document.getElementById('energy-modal').style.display = "flex"; }
+        function closeEnergyModal() { document.getElementById('energy-modal').style.display = "none"; }
+        
+        function buyEnergyPack() {
+            if (cash < 30000) { alert("Недостаточно рублей на балансе!"); return; }
+            cash -= 30000; energy = Math.min(maxEnergy, energy + 10);
+            closeEnergyModal(); saveProgress(); updateUI();
+        }
+
+        function generateRandomItem() {
+            totalSpins += 1;
+            let rand = Math.random() * 100; let rarity = "common";
+            if (rand < 78) rarity = "common"; 
+            else if (rand < 96) rarity = "rare";
+            else if (rand < 99.6) rarity = "epic"; 
+            else rarity = "legendary";
+
+            const pool = lootPool[rarity]; const baseItem = pool[Math.floor(Math.random() * pool.length)];
+            const brandMult = (1 + Math.random() * 0.4).toFixed(1);
+            const collabrMult = (1 + Math.random() * 0.3).toFixed(1);
+            const conditionMult = (1 + Math.random() * 0.3).toFixed(1);
+            let finalPrice = Math.floor(baseItem.basePrice * brandMult * collabrMult * conditionMult);
+            
+            return { 
+                id: Date.now() + Math.random(), ...baseItem, finalPrice, serialNum: totalSpins,
+                brandMult, collabrMult, conditionMult
+            };
+        }
+
+        function renderDroppedItemUI(item) {
+            const previewBox = document.getElementById('item-img-div');
+            previewBox.classList.remove('shake'); void previewBox.offsetWidth; previewBox.classList.add('shake');
+            previewBox.innerText = item.emoji;
+            previewBox.style.boxShadow = `0 10px 40px ${item.glow}`;
+            previewBox.style.border = `1px solid ${item.color}`;
+            document.getElementById('item-name').innerText = item.name;
+            document.getElementById('item-rarity').innerText = item.rarityText;
+            document.getElementById('item-rarity').style.color = item.color;
+            document.getElementById('item-serial').innerText = "№ " + item.serialNum;
+            document.getElementById('item-price').innerText = item.finalPrice.toLocaleString() + " ₽";
+            document.getElementById('item-mults').innerHTML = "Бренд <span class=\"multiplier-val\">×" + item.brandMult + "</span> · Коллаб <span class=\"multiplier-val\">×" + item.collabrMult + "</span><br>Состояние <span class=\"multiplier-val\">×" + item.conditionMult + "</span>";
+        }
+        function dropItem() {
+            if (energy < 1) { openEnergyModal(); return; }
+            if (currentDroppedItem) { cash += currentDroppedItem.finalPrice; }
+            document.getElementById('multidrop-box').style.display = "none"; 
+            document.getElementById('normal-actions').style.display = "flex";
+
+            energy -= 1; currentDroppedItem = generateRandomItem();
+            renderDroppedItemUI(currentDroppedItem);
+            saveProgress(); updateUI();
+        }
+
+        function dropX10Items() {
+            let useEnergy = energy >= 10;
+            if (!useEnergy && cash < 100000) { alert("Нужно либо 10 ⚡, либо 100 000 ₽!"); return; }
+            if (currentDroppedItem) { cash += currentDroppedItem.finalPrice; currentDroppedItem = null; }
+
+            if (useEnergy) { energy -= 10; } else { cash -= 100000; }
+            let localDropped = []; let totalPackPrice = 0;
+            const listBox = document.getElementById('multidrop-box');
+            listBox.innerHTML = ""; 
+
+            for (let i = 0; i < 10; i++) {
+                let item = generateRandomItem();
+                wardrobe.push(item); localDropped.push(item);
+                totalPackPrice += item.finalPrice;
+            }
+
+            const previewBox = document.getElementById('item-img-div');
+            previewBox.innerText = "📦";
+            previewBox.style.boxShadow = "0 10px 40px rgba(52,199,89,0.3)";
+            previewBox.style.border = "1px solid #34c759";
+            document.getElementById('item-name').innerText = "ПАК ИЗ 10 КОРОБОК";
+            document.getElementById('item-rarity').innerText = "МАССОВЫЙ ДРОП";
+            document.getElementById('item-rarity').style.color = "#34c759";
+            document.getElementById('item-serial').innerText = "Все вещи сохранены в гардероб";
+            document.getElementById('item-price').innerText = totalPackPrice.toLocaleString() + " ₽";
+            document.getElementById('item-mults').innerText = "Ниже представлен полный отчет по выбитому шмоту:";
+
+            localDropped.forEach(item => {
+                const row = document.createElement('div'); row.className = "multidrop-row";
+                row.innerHTML = `<span>${item.emoji} ${item.name} (№${item.serialNum})</span><span style="color:${item.color}">${item.finalPrice.toLocaleString()} ₽</span>`;
+                listBox.appendChild(row);
+            });
+            listBox.style.display = "block"; document.getElementById('normal-actions').style.display = "none";
+            saveProgress(); updateUI();
+        }
+
+        function sellItem() { if (!currentDroppedItem) return; cash += currentDroppedItem.finalPrice; resetDropArea(); saveProgress(); updateUI(); }
+        function saveToWardrobe() { if (!currentDroppedItem) return; wardrobe.push(currentDroppedItem); resetDropArea(); saveProgress(); updateUI(); }
+
+        function renderWardrobe() {
+            const grid = document.getElementById('wardrobe-grid'); grid.innerHTML = "";
+            if (wardrobe.length === 0) {
+                grid.innerHTML = "<div style='grid-column: span 2; color: #8e8e93; margin-top: 40px; font-weight:600;'>Гардероб пуст. Дропни что-нибудь!</div>";
+                return;
+            }
+            wardrobe.forEach(item => {
+                const card = document.createElement('div'); card.className = "wardrobe-card";
+                card.style.border = `1px solid ${item.color}22`;
+                card.innerHTML = `
+                    <div class="card-img-box" style="box-shadow: 0 4px 15px ${item.glow}">${item.emoji}</div>
+                    <div class="card-name" style="color: ${item.color}">${item.name}</div>
+                    <div class="card-price">${item.finalPrice.toLocaleString()} ₽</div>
+                    <div class="item-serial" style="margin-bottom:8px;">№ ${item.serialNum}</div>
+                    <button class="btn-danger" onclick="sellFromWardrobe(${item.id})">Слить</button>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function sellFromWardrobe(itemId) {
+            const itemIndex = wardrobe.findIndex(i => i.id === itemId);
+            if (itemIndex !== -1) {
+                cash += wardrobe[itemIndex].finalPrice; wardrobe.splice(itemIndex, 1);
+                renderWardrobe(); saveProgress(); updateUI();
+            }
+        }
+        
+        function resetDropArea() {
+            currentDroppedItem = null; const previewBox = document.getElementById('item-img-div');
+            document.getElementById('multidrop-box').style.display = "none";
+            document.getElementById('normal-actions').style.display = "flex";
+            previewBox.innerText = "📦";
+            previewBox.style.boxShadow = "0 10px 40px rgba(255, 255, 255, 0.05)";
+            previewBox.style.border = "1px solid rgba(255,255,255,0.05)";
+            document.getElementById('item-name').innerText = "Открой коробку";
+            document.getElementById('item-rarity').innerText = "Нажми Дроп"; document.getElementById('item-rarity').style.color = "#ffffff";
+            document.getElementById('item-serial').innerText = "№ " + totalSpins; document.getElementById('item-price').innerText = "0 ₽";
+            document.getElementById('item-mults').innerText = "Ожидание открытия...";
+        }
+
+        loadProgress(); updateUI();
+        setInterval(() => { if (energy < maxEnergy) { energy += 1; saveProgress(); updateUI(); } }, 60000);
+    </script>
+</body>
+</html>
