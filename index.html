@@ -77,12 +77,12 @@
     </style>
 </head>
 <body>
-    <!-- НОВАЯ ЦЕНА В МОДАЛКЕ: 138 000 ₽ -->
+    <!-- ИСПРАВЛЕНА ЦЕНА В МОДАЛКЕ: 100 000 ₽ -->
     <div class="modal-overlay" id="energy-modal">
         <div class="modal-card">
             <div class="modal-icon">🔋</div>
             <div class="modal-title">Закончилась энергия</div>
-            <div class="modal-text">Хотите мгновенно восстановить силу и продолжить хасл?<br><b style="color:#fff">Пополнение: +10 ⚡ за 138 000 ₽</b></div>
+            <div class="modal-text">Хотите мгновенно восстановить силу и продолжить хасл?<br><b style="color:#fff">Пополнение: +10 ⚡ за 100 000 ₽</b></div>
             <div style="display:flex; gap:10px;">
                 <button class="btn-secondary" style="padding:12px;" onclick="closeEnergyModal()">Отмена</button>
                 <button class="btn-buy" style="padding:12px; border-radius:16px;" onclick="buyEnergyPack()">Купить</button>
@@ -121,7 +121,7 @@
             </div>
             <div id="wardrobe-screen" class="screen"><div class="screen-title">Мой Гардероб</div><div class="wardrobe-grid" id="wardrobe-grid"></div></div>
             
-            <!-- НОВАЯ ЦЕНА В МАГАЗИНЕ: 138 000 ₽ -->
+            <!-- ИСПРАВЛЕНА ЦЕНА В МАГАЗИНЕ: 100 000 ₽ -->
             <div id="shop-screen" class="screen">
                 <div class="screen-title">Магазин улучшений</div>
                 <div class="shop-list">
@@ -147,7 +147,6 @@
         let cash = 50000; let energy = 30; const maxEnergy = 30;
         let currentDroppedItem = null; let totalSpins = 0; let wardrobe = [];
 
-        // Пул вещей расширен новыми брендами средней и тяжелой категории люкса/стритвира
         const lootPool = {
             common: [
                 { name: "Носки Nike Everyday Pack", emoji: "🧦", basePrice: 900, rarityText: "Обычное", color: "#ffffff", glow: "rgba(255,255,255,0.12)" },
@@ -212,6 +211,13 @@
             }
         }
 
+        // ИСПРАВЛЕНО: Списание ровно 100 000 ₽ за пак
+        function buyEnergyPack() {
+            if (cash < 100000) { alert("Недостаточно рублей на балансе!"); return; }
+            cash -= 100000; energy = Math.min(maxEnergy, energy + 10);
+            closeEnergyModal(); saveProgress(); updateUI();
+        }
+
         function updateUI() {
             document.getElementById('display-cash').innerText = cash.toLocaleString() + " ₽";
             document.getElementById('display-energy').innerText = "⚡ " + energy;
@@ -220,13 +226,6 @@
 
         function openEnergyModal() { document.getElementById('energy-modal').style.display = "flex"; }
         function closeEnergyModal() { document.getElementById('energy-modal').style.display = "none"; }
-        
-        // ОБНОВЛЕНО: Списание ровно 138 000 ₽ за пак
-        function buyEnergyPack() {
-            if (cash < 100000) { alert("Недостаточно рублей на балансе!"); return; }
-            cash -= 100000; energy = Math.min(maxEnergy, energy + 10);
-            closeEnergyModal(); saveProgress(); updateUI();
-        }
 
         function generateRandomItem() {
             totalSpins += 1; let rand = Math.random() * 100; let rarity = "common";
