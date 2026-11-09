@@ -110,6 +110,7 @@
                     <div class="multidrop-list" id="multidrop-box"></div>
                 </div>
                 <div class="bottom-section">
+                    <div class="locked-feature"><div>Брендовые боксы</div><div class="locked-note">Доступно скоро &gt;</div></div>
                     <div class="controls-panel">
                         <div class="action-buttons" id="normal-actions">
                             <button class="btn-secondary" onclick="saveToWardrobe()">В гардероб</button>
@@ -154,28 +155,56 @@
         const lootPool = {
             common: [
                 { name: "Носки Nike Everyday Pack", emoji: "🧦", basePrice: 900, rarityText: "Обычное", color: "#ffffff", glow: "rgba(255,255,255,0.12)", rarityKey: "common" },
-                { name: "Базовая футболка Uniqlo AIRism", emoji: "👕", basePrice: 2400, rarityText: "Обычное", color: "#ffffff", glow: "rgba(255,255,255,0.12)", rarityKey: "common" },
-                { name: "Кепка Carhartt WIP Madison", emoji: "🧢", basePrice: 4500, rarityText: "Обычное", color: "#ffffff", glow: "rgba(255,255,255,0.12)", rarityKey: "common" }
+                { name: "Футболка Uniqlo AIRism White", emoji: "👕", basePrice: 2400, rarityText: "Обычное", color: "#ffffff", glow: "rgba(255,255,255,0.12)", rarityKey: "common" },
+                { name: "Кепка Carhartt WIP Madison", emoji: "🧢", basePrice: 4500, rarityText: "Обычное", color: "#ffffff", glow: "rgba(255,255,255,0.12)", rarityKey: "common" },
+                { name: "Тканевый ремень Carhartt WIP", emoji: "🎗️", basePrice: 3100, rarityText: "Обычное", color: "#ffffff", glow: "rgba(255,255,255,0.12)", rarityKey: "common" },
+                { name: "Шнурки Travis Scott Cactus Jack", emoji: "🧵", basePrice: 1500, rarityText: "Обычное", color: "#ffffff", glow: "rgba(255,255,255,0.12)", rarityKey: "common" },
+                { name: "Повязка на голову Nike Pro", emoji: "🦱", basePrice: 1900, rarityText: "Обычное", color: "#ffffff", glow: "rgba(255,255,255,0.12)", rarityKey: "common" },
+                { name: "Чехол Chrome Hearts iPhone", emoji: "📱", basePrice: 5000, rarityText: "Обычное", color: "#ffffff", glow: "rgba(255,255,255,0.12)", rarityKey: "common" },
+                { name: "Брелок Supreme Box Logo", emoji: "🔑", basePrice: 2200, rarityText: "Обычное", color: "#ffffff", glow: "rgba(255,255,255,0.12)", rarityKey: "common" }
             ],
             rare: [
                 { name: "Лонгслив Stone Island Patch", emoji: "👕", basePrice: 16000, rarityText: "Редкое", color: "#58a6ff", glow: "rgba(0,122,255,0.25)", rarityKey: "rare" },
                 { name: "Худи Stussy Stock Logo", emoji: "🧥", basePrice: 18000, rarityText: "Редкое", color: "#58a6ff", glow: "rgba(0,122,255,0.25)", rarityKey: "rare" },
-                { name: "Футболка Corteiz Alcatraz", emoji: "👕", basePrice: 10500, rarityText: "Редкое", color: "#58a6ff", glow: "rgba(0,122,255,0.25)", rarityKey: "rare" }
+                { name: "Футболка Corteiz Alcatraz", emoji: "👕", basePrice: 10500, rarityText: "Редкое", color: "#58a6ff", glow: "rgba(0,122,255,0.25)", rarityKey: "rare" },
+                { name: "Кроссовки Adidas Campus 00s", emoji: "👟", basePrice: 14000, rarityText: "Редкое", color: "#58a6ff", glow: "rgba(0,122,255,0.25)", rarityKey: "rare" },
+                { name: "Шорты сетчатые Corteiz Rules", emoji: "🩳", basePrice: 11000, rarityText: "Редкое", color: "#58a6ff", glow: "rgba(0,122,255,0.25)", rarityKey: "rare" },
+                { name: "Свитшот Carhartt WIP Vista", emoji: "🧥", basePrice: 15000, rarityText: "Редкое", color: "#58a6ff", glow: "rgba(0,122,255,0.25)", rarityKey: "rare" },
+                { name: "Кепка Synaworld Logo Cap", emoji: "🧢", basePrice: 8500, rarityText: "Редкое", color: "#58a6ff", glow: "rgba(0,122,255,0.25)", rarityKey: "rare" },
+                { name: "Футболка Palm Angels Spray", emoji: "👕", basePrice: 19500, rarityText: "Редкое", color: "#58a6ff", glow: "rgba(0,122,255,0.25)", rarityKey: "rare" }
             ],
             epic: [
                 { name: "Куртка Arc'teryx Beta Lightweight", emoji: "🧥", basePrice: 48000, rarityText: "Эпическое", color: "#a371f7", glow: "rgba(175,82,222,0.35)", rarityKey: "epic" },
                 { name: "Очки Oakley Radar EV Black", emoji: "🕶️", basePrice: 24000, rarityText: "Эпическое", color: "#a371f7", glow: "rgba(175,82,222,0.35)", rarityKey: "epic" },
-                { name: "Джоггеры Corteiz Cargo", emoji: "👖", basePrice: 29000, rarityText: "Эпическое", color: "#a371f7", glow: "rgba(175,82,222,0.35)", rarityKey: "epic" }
+                { name: "Джоггеры Corteiz Cargo", emoji: "👖", basePrice: 29000, rarityText: "Эпическое", color: "#a371f7", glow: "rgba(175,82,222,0.35)", rarityKey: "epic" },
+                { name: "Худи Hellstar Brainwashed", emoji: "🧥", basePrice: 36000, rarityText: "Эпическое", color: "#a371f7", glow: "rgba(175,82,222,0.35)", rarityKey: "epic" },
+                { name: "Кроссовки Nike Air Max Plus TN", emoji: "👟", basePrice: 26000, rarityText: "Эпическое", color: "#a371f7", glow: "rgba(175,82,222,0.35)", rarityKey: "epic" },
+                { name: "Трэксьют Synaworld Тканевый", emoji: "🥼", basePrice: 38000, rarityText: "Эпическое", color: "#a371f7", glow: "rgba(175,82,222,0.35)", rarityKey: "epic" },
+                { name: "Джинсы Polar Big Boy Light Blue", emoji: "👖", basePrice: 21000, rarityText: "Эпическое", color: "#a371f7", glow: "rgba(175,82,222,0.35)", rarityKey: "epic" },
+                { name: "Кеды Rick Owens DRKSHDW Ramones", emoji: "👟", basePrice: 58000, rarityText: "Эпическое", color: "#a371f7", glow: "rgba(175,82,222,0.35)", rarityKey: "epic" }
             ],
             legendary: [
                 { name: "Кроссовки Travis Scott x AJ1 Low", emoji: "👟", basePrice: 95000, rarityText: "🔥 ЛЕГЕНДАРНОЕ", color: "#ff9500", glow: "rgba(255,149,0,0.4)", rarityKey: "legendary" },
-                { name: "Пуховик Supreme x The North Face", emoji: "🧥", basePrice: 89000, rarityText: "🔥 ЛЕГЕНДАРНОЕ", color: "#ff9500", glow: "rgba(255,149,0,0.4)", rarityKey: "legendary" }
+                { name: "Пуховик Supreme x The North Face", emoji: "🧥", basePrice: 89000, rarityText: "🔥 ЛЕГЕНДАРНОЕ", color: "#ff9500", glow: "rgba(255,149,0,0.4)", rarityKey: "legendary" },
+                { name: "Кроссовки Corteiz x Nike AM95", emoji: "👟", basePrice: 78000, rarityText: "🔥 ЛЕГЕНДАРНОЕ", color: "#ff9500", glow: "rgba(255,149,0,0.4)", rarityKey: "legendary" },
+                { name: "Худи Vetements Total Fucking Darkness", emoji: "🧥", basePrice: 160000, rarityText: "🔥 ЛЕГЕНДАРНОЕ", color: "#ff9500", glow: "rgba(255,149,0,0.4)", rarityKey: "legendary" },
+                { name: "Кроссовки Balenciaga Cargo Sneaker", emoji: "👟", basePrice: 110000, rarityText: "🔥 ЛЕГЕНДАРНОЕ", color: "#ff9500", glow: "rgba(255,149,0,0.4)", rarityKey: "legendary" },
+                { name: "Бомбер Vetements Alpha Industries", emoji: "🧥", basePrice: 185000, rarityText: "🔥 ЛЕГЕНДАРНОЕ", color: "#ff9500", glow: "rgba(255,149,0,0.4)", rarityKey: "legendary" },
+                { name: "Кеды Rick Owens Mainline Geobasket", emoji: "👟", basePrice: 125000, rarityText: "🔥 ЛЕГЕНДАРНОЕ", color: "#ff9500", glow: "rgba(255,149,0,0.4)", rarityKey: "legendary" },
+                { name: "Джинсы Balenciaga Lost Tape Denim", emoji: "👖", basePrice: 98000, rarityText: "🔥 ЛЕГЕНДАРНОЕ", color: "#ff9500", glow: "rgba(255,149,0,0.4)", rarityKey: "legendary" }
             ],
             mythic: [
                 { name: "Золотая цепь Chrome Hearts 22k", emoji: "👑", basePrice: 280000, rarityText: "✨ МИФИЧЕСКОЕ", color: "#ff3b30", glow: "rgba(255,59,48,0.6)", rarityKey: "mythic" },
-                { name: "Кожаный жилет Chrome Hearts Cross", emoji: "🦺", basePrice: 350000, rarityText: "✨ МИФИЧЕСКОЕ", color: "#ff3b30", glow: "rgba(255,59,48,0.6)", rarityKey: "mythic" }
+                { name: "Кожаный жилет Chrome Hearts Cross", emoji: "🦺", basePrice: 350000, rarityText: "✨ МИФИЧЕСКОЕ", color: "#ff3b30", glow: "rgba(255,59,48,0.6)", rarityKey: "mythic" },
+                { name: "Браслет Chrome Hearts ID Bracelet", emoji: "📿", basePrice: 260000, rarityText: "✨ МИФИЧЕСКОЕ", color: "#ff3b30", glow: "rgba(255,59,48,0.6)", rarityKey: "mythic" },
+                { name: "Кожаные штаны Chrome Hearts Cemetery", emoji: "👖", basePrice: 520000, rarityText: "✨ МИФИЧЕСКОЕ", color: "#ff3b30", glow: "rgba(255,59,48,0.6)", rarityKey: "mythic" },
+                { name: "Куртка Balenciaga Leather Bomber", emoji: "🧥", basePrice: 410000, rarityText: "✨ МИФИЧЕСКОЕ", color: "#ff3b30", glow: "rgba(255,59,48,0.6)", rarityKey: "mythic" },
+                { name: "Шуба Vetements Oversized Fur Coat", emoji: "🧥", basePrice: 680000, rarityText: "✨ МИФИЧЕСКОЕ", color: "#ff3b30", glow: "rgba(255,59,48,0.6)", rarityKey: "mythic" },
+                { name: "Часы Rolex Submariner x Chrome Hearts", emoji: "⌚", basePrice: 1200000, rarityText: "✨ МИФИЧЕСКОЕ", color: "#ff3b30", glow: "rgba(255,59,48,0.6)", rarityKey: "mythic" },
+                { name: "Сумка Hermes Birkin 40 Togo Black", emoji: "💼", basePrice: 1800000, rarityText: "✨ МИФИЧЕСКОЕ", color: "#ff3b30", glow: "rgba(255,59,48,0.6)", rarityKey: "mythic" }
             ]
         };
+
         function switchScreen(screenName) {
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
             document.querySelectorAll('.tab-btn').forEach(t => t.classList.remove('active'));
@@ -185,22 +214,8 @@
             if (screenName === 'collection') renderCollection();
         }
 
-        function saveProgress() {
-            const gameData = { cash, energy, totalSpins, wardrobe, luckBonus, collectedItems };
-            localStorage.setItem('hustleDropSave', JSON.stringify(gameData));
-        }
-
-        function loadProgress() {
-            const savedData = localStorage.getItem('hustleDropSave');
-            if (savedData) {
-                try {
-                    const data = JSON.parse(savedData);
-                    cash = data.cash ?? 50000; energy = data.energy ?? 30;
-                    totalSpins = data.totalSpins ?? 0; wardrobe = data.wardrobe ?? [];
-                    luckBonus = data.luckBonus ?? 0; collectedItems = data.collectedItems ?? { rare:false, epic:false, legendary:false, mythic:false };
-                } catch (e) { console.error(e); }
-            }
-        }
+        function saveProgress() { const gameData = { cash, energy, totalSpins, wardrobe, luckBonus, collectedItems }; localStorage.setItem('hustleDropSave', JSON.stringify(gameData)); }
+        function loadProgress() { const savedData = localStorage.getItem('hustleDropSave'); if (savedData) { try { const data = JSON.parse(savedData); cash = data.cash ?? 50000; energy = data.energy ?? 30; totalSpins = data.totalSpins ?? 0; wardrobe = data.wardrobe ?? []; luckBonus = data.luckBonus ?? 0; collectedItems = data.collectedItems ?? { rare:false, epic:false, legendary:false, mythic:false }; } catch (e) { console.error(e); } } }
 
         function updateUI() {
             document.getElementById('display-cash').innerText = cash.toLocaleString() + " ₽";
@@ -213,8 +228,7 @@
 
         function openEnergyModal() { document.getElementById('energy-modal').style.display = "flex"; }
         function closeEnergyModal() { document.getElementById('energy-modal').style.display = "none"; }
-        function buyEnergyPack() { if (cash < 100000) { alert("Недостаточно рублей!"); return; } cash -= 100000; energy = Math.min(maxEnergy, energy + 10); closeEnergyModal(); saveProgress(); updateUI(); }
-
+        function buyEnergyPack() { if (cash < 100000) { alert("Недостаточно рублей!"); return; } cash -= 100000; energy = Math.min(30, energy + 10); closeEnergyModal(); saveProgress(); updateUI(); }
         function generateRandomItem() {
             totalSpins += 1; let rand = Math.random() * 100; let rarity = "common";
             if (rand < 0.05) rarity = "mythic";
@@ -232,14 +246,14 @@
         }
 
         function renderDroppedItemUI(item) {
-            const previewBox = document.getElementById('item-img-div');
-            previewBox.classList.remove('shake'); void previewBox.offsetWidth; previewBox.classList.add('shake');
+            const previewBox = document.getElementById('item-img-div'); previewBox.classList.remove('shake'); void previewBox.offsetWidth; previewBox.classList.add('shake');
             previewBox.innerText = item.emoji; previewBox.style.boxShadow = `0 10px 40px ${item.glow}`; previewBox.style.border = `1px solid ${item.color}`;
             document.getElementById('item-name').innerText = item.name; document.getElementById('item-rarity').innerText = item.rarityText;
             document.getElementById('item-rarity').style.color = item.color; document.getElementById('item-serial').innerText = "№ " + item.serialNum;
             document.getElementById('item-price').innerText = item.finalPrice.toLocaleString() + " ₽";
             document.getElementById('item-mults').innerHTML = "Бренд <span class=\"multiplier-val\">×" + item.brandMult + "</span> · Коллаб <span class=\"multiplier-val\">×" + item.collabrMult + "</span><br>Состояние <span class=\"multiplier-val\">×" + item.conditionMult + "</span>";
         }
+
         function checkCollectionTrigger(item) {
             const targets = {
                 "Лонгслив Stone Island Patch": { key: "rare", boost: 15 },
@@ -253,20 +267,13 @@
             }
         }
 
-        function dropItem() {
-            if (energy < 1) { openEnergyModal(); return; }
-            if (currentDroppedItem) { cash += currentDroppedItem.finalPrice; }
-            document.getElementById('multidrop-box').style.display = "none"; document.getElementById('normal-actions').style.display = "flex";
-            energy -= 1; currentDroppedItem = generateRandomItem(); renderDroppedItemUI(currentDroppedItem); saveProgress(); updateUI();
-        }
+        function dropItem() { if (energy < 1) { openEnergyModal(); return; } if (currentDroppedItem) { cash += currentDroppedItem.finalPrice; } document.getElementById('multidrop-box').style.display = "none"; document.getElementById('normal-actions').style.display = "flex"; energy -= 1; currentDroppedItem = generateRandomItem(); renderDroppedItemUI(currentDroppedItem); saveProgress(); updateUI(); }
 
         function dropX10Items() {
-            let useEnergy = energy >= 10;
-            if (!useEnergy && cash < 100000) { alert("Нужно либо 10 ⚡, либо 100 000 ₽!"); return; }
+            let useEnergy = energy >= 10; if (!useEnergy && cash < 100000) { alert("Нужно либо 10 ⚡, либо 100 000 ₽!"); return; }
             if (currentDroppedItem) { cash += currentDroppedItem.finalPrice; currentDroppedItem = null; }
             if (useEnergy) { energy -= 10; } else { cash -= 100000; }
-            let localDropped = []; let totalPackPrice = 0;
-            const listBox = document.getElementById('multidrop-box'); listBox.innerHTML = ""; 
+            let localDropped = []; let totalPackPrice = 0; const listBox = document.getElementById('multidrop-box'); listBox.innerHTML = ""; 
             for (let i = 0; i < 10; i++) { let item = generateRandomItem(); wardrobe.push(item); checkCollectionTrigger(item); localDropped.push(item); totalPackPrice += item.finalPrice; }
             const previewBox = document.getElementById('item-img-div'); previewBox.innerText = "📦"; previewBox.style.boxShadow = "0 10px 40px rgba(52,199,89,0.3)"; previewBox.style.border = "1px solid #34c759";
             document.getElementById('item-name').innerText = "ПАК ИЗ 10 КОРОБОК"; document.getElementById('item-rarity').innerText = "МАССОВЫЙ ДРОП"; document.getElementById('item-rarity').style.color = "#34c759";
